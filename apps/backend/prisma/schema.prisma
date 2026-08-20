@@ -4,8 +4,10 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  //previewFeatures = ["relationJoins", "driverAdapters", "metrics", "queryCompiler"]
+  moduleFormat    = "cjs"
 }
 
 datasource db {
@@ -49,10 +51,10 @@ model Safra {
 }
 
 model Cultura {
-  id String @id @default(uuid())
-  safraId String
-  nome String
-  safra Safra @relation(fields: [safraId], references: [id], onDelete: Cascade)
+  id       String   @id @default(uuid())
+  safraId  String
+  nome     String
+  safra    Safra    @relation(fields: [safraId], references: [id], onDelete: Cascade)
   criadoEm DateTime @default(now())
 
   @@index([safraId])

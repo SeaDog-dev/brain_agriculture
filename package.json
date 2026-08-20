@@ -22,9 +22,5 @@
   "bugs": {
     "url": "https://github.com/SeaDog-dev/brain_agriculture/issues"
   },
-  "homepage": "https://github.com/SeaDog-dev/brain_agriculture#readme",
-  "dependencies": {
-    "@prisma/client": "^7.9.1",
-    "prisma": "^7.9.1"
-  }
+  "homepage": "https://github.com/SeaDog-dev/brain_agriculture#readme"
 }
