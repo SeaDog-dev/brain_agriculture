@@ -36,6 +36,8 @@ model Propriedade {
   safras           Safra[]
   criadoEm         DateTime @default(now())
   atualizadoEm     DateTime @updatedAt
+
+  @@index([produtorId])
 }
 
 model Safra {
