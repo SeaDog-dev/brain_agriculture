@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Produtor {
+  id           String        @id @default(uuid())
+  documento    String        @unique
+  nome         String
+  propriedade  Propriedade[]
+  criadoEm     DateTime      @default(now())
+  atualizadoEm DateTime      @updatedAt
+}
+
+model Propriedade {
+  id               String   @id @default(uuid())
+  produtorId       String
+  nome             String
+  cidade           String
+  estado           String
+  areaTotal        Decimal
+  areaAgricultavel Decimal
+  areaVegetacao    Decimal
+  produtor         Produtor @relation(fields: [produtorId], references: [id])
+  safras           Safra[]
+  criadoEm         DateTime @default(now())
+  atualizadoEm     DateTime @updatedAt
+}
+
+model Safra {
+  id            String      @id @default(uuid())
+  propriedadeId String
+  ano           Int
+  propriedade   Propriedade @relation(fields: [propriedadeId], references: [id], onDelete: Cascade)
+  culturas      Cultura[]
+  criadoEm      DateTime    @default(now())
+  atualizadoEm  DateTime    @updatedAt
+
+  @@unique([propriedadeId, ano])
+}
+
+model Cultura {
+  id String @id @default(uuid())
+  safraId String
+  nome String
+  safra Safra @relation(fields: [safraId], references: [id], onDelete: Cascade)
+  criadoEm DateTime @default(now())
+
+  @@index([safraId])
+}
