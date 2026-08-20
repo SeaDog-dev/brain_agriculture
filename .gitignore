@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build
+dist/
+build/
+coverage/
+.next/
+.vite/
+
+# Logs
+*.log
+logs/
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary
+tmp/
+temp/

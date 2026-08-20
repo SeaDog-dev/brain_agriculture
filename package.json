@@ -1,0 +1,26 @@
+{
+  "name": "brain_agriculture",
+  "version": "1.0.0",
+  "description": "Aplicação para gerenciamento de produtores rurais, propriedades agrícolas,\r culturas plantadas e indicadores relacionados ao uso do solo.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "test": "npm run test --workspaces",
+    "build": "npm run build --workspaces"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeaDog-dev/brain_agriculture.git"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "keywords": [],
+  "author": "Marcos Felipe - SeaDog-dev",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SeaDog-dev/brain_agriculture/issues"
+  },
+  "homepage": "https://github.com/SeaDog-dev/brain_agriculture#readme"
+}
