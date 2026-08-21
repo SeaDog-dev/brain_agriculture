@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import {prisma} from '../database/prisma'
-import { ProdutorRepository } from 'src/repositories/ProdutorRepositoru'
+import { ProdutorRepository } from 'src/repositories/ProdutorRepository'
 import { CriarProdutorService } from 'src/services/CriarProdutorService'
 import { ProdutorController } from 'src/controllers/ProdutorController'
 
@@ -13,9 +13,5 @@ const produtorController = new ProdutorController(criarProdutorService)
 produtorRoutes.post('/produtores', (req, res) => {
     produtorController.criar(req, res)
 });
-
-produtorRoutes.get('/produtores', (req, res) => {
-    res.json({message: "Bão ço"})
-})
 
 export default produtorRoutes

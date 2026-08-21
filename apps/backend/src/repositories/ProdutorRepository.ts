@@ -1,4 +1,4 @@
-import { PrismaClient } from "generated/prisma/client";
+import { PrismaClient, Produtor } from "generated/prisma/client";
 
 export class ProdutorRepository {
     constructor(private readonly prisma: PrismaClient) { }

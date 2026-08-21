@@ -1,4 +1,5 @@
-import { ProdutorRepository } from "src/repositories/ProdutorRepositoru";
+import { ProdutorRepository } from "src/repositories/ProdutorRepository";
+import { isCPF, isCNPJ } from "validation-br";
 
 interface CriarProdutoDTO {
     documento: string;
@@ -12,6 +13,10 @@ export class CriarProdutorService {
         const produtorExistente = await this.produtorRepository.buscarPorDocumento(documento)
         if(produtorExistente){
             throw new Error('Já existe um produtor com este documento!')
+        }
+
+        if(!isCNPJ(documento) && !isCPF(documento)){
+            throw new Error('Documento Inválido !')
         }
 
         return this.produtorRepository.criar(documento, nome)
