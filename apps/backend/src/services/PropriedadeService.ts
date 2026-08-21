@@ -10,7 +10,7 @@ interface CriarPropriedadeDTO {
     areaVegetacao: number;
 }
 
-export class CriarPropriedadeService {
+export class PropriedadeService {
     constructor(private readonly propriedadeRepository: PropriedadeRepository) { }
 
     async executar(propriedade: CriarPropriedadeDTO) {

@@ -12,11 +12,30 @@ export class ProdutorRepository {
         })
     }
 
-    async buscarPorDocumento(documento: string){
+    async buscarPorDocumento(documento: string) {
         return this.prisma.produtor.findUnique({
             where: {
                 documento
             }
         })
+    }
+
+    async listar() {
+        return this.prisma.produtor.findMany()
+    }
+
+    async buscarPorId(id: string) {
+        return this.prisma.produtor.findUnique({ where: { id } })
+    }
+
+    async atualizar(id:string, documento: string, nome: string){
+        return this.prisma.produtor.update({
+            where: {documento},
+            data: {documento,nome}
+        })
+    }
+
+    async excluir(id: string){
+        return this.prisma.produtor.delete({where: {id}})
     }
 }
