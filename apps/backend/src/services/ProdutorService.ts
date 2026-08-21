@@ -32,7 +32,7 @@ export class ProdutorService {
         if(!response){
             throw new NotFoundException('Produtor Não encontrado')
         }
-        return 
+        return response
     }
 
     async atualizar(id: string, documento: string, nome: string) {
