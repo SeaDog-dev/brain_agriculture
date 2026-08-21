@@ -7,6 +7,7 @@ import express from 'express'
 import propriedadeRoutes from './routes/propriedade.router';
 import safraRoutes from './routes/safra.router';
 import culturaRoutes from './routes/cultura.router';
+import dashboardRoutes from './routes/dashboard.routes';
 
 
 async function bootstrap() {
@@ -16,6 +17,7 @@ async function bootstrap() {
   app.use(propriedadeRoutes)
   app.use(safraRoutes)
   app.use(culturaRoutes)
+  app.use(dashboardRoutes)
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

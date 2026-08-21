@@ -1,4 +1,5 @@
 import { ProdutorRepository } from "src/repositories/ProdutorRepository";
+import { NotFoundException, ConflictException } from "@nestjs/common";
 import { isCPF, isCNPJ } from "validation-br";
 
 interface CriarProdutorDTO {
@@ -12,7 +13,7 @@ export class ProdutorService {
     async criar({documento, nome}: CriarProdutorDTO) {
         const produtorExistente = await this.produtorRepository.buscarPorDocumento(documento)
         if(produtorExistente){
-            throw new Error('Já existe um produtor com este documento!')
+            throw new ConflictException('Já existe um produtor com este documento!')
         }
 
         if(!isCNPJ(documento) && !isCPF(documento)){
@@ -27,7 +28,11 @@ export class ProdutorService {
     }
 
     async buscarPorId(id: string) {
-        return this.produtorRepository.buscarPorId(id);
+        const response = await this.produtorRepository.buscarPorId(id);
+        if(!response){
+            throw new NotFoundException('Produtor Não encontrado')
+        }
+        return 
     }
 
     async atualizar(id: string, documento: string, nome: string) {
