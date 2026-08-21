@@ -13,6 +13,7 @@ import dashboardRoutes from './routes/dashboard.routes';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(express.json())
+  app.enableCors();
   app.use(produtorRoutes)
   app.use(propriedadeRoutes)
   app.use(safraRoutes)
