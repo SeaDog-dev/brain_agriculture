@@ -1,7 +1,12 @@
 import { type FormEvent, useEffect, useState } from "react";
 
-import { criarPropriedade, atualizarPropriedade } from "../../services/propriedadeService"
+import {
+    criarPropriedade,
+    atualizarPropriedade,
+} from "../../services/propriedadeService";
+
 import { listarProdutores } from "../../services/produtorService";
+
 import type { Produtor } from "../../types/produtor";
 import type { Propriedade } from "../../types/propriedade";
 
@@ -16,66 +21,76 @@ export default function PropriedadeForm({
     onSuccess,
     onCancel,
 }: PropriedadeFormProps) {
+
     const [produtores, setProdutores] = useState<Produtor[]>([]);
 
-    const [produtorId, setProdutorId] = useState(propriedade?.produtorId ?? "");
-    const [nome, setNome] = useState(propriedade?.nome ?? "");
-    const [cidade, setCidade] = useState(propriedade?.cidade ?? "");
-    const [estado, setEstado] = useState(propriedade?.estado ?? "");
-    const [areaTotal, setAreaTotal] = useState(propriedade?.areaTotal ?? "");
-    const [areaAgricultavel, setAreaAgricultavel] = useState(propriedade?.areaAgricultavel ?? "");
-    const [areaVegetacao, setAreaVegetacao] = useState(propriedade?.areaVegetacao ?? "");
+    const [produtorId, setProdutorId] = useState(
+        propriedade?.produtorId ?? ""
+    );
+
+    const [nome, setNome] = useState(
+        propriedade?.nome ?? ""
+    );
+
+    const [cidade, setCidade] = useState(
+        propriedade?.cidade ?? ""
+    );
+
+    const [estado, setEstado] = useState(
+        propriedade?.estado ?? ""
+    );
+
+    const [areaTotal, setAreaTotal] = useState(
+        propriedade?.areaTotal ?? ""
+    );
+
+    const [areaAgricultavel, setAreaAgricultavel] = useState(
+        propriedade?.areaAgricultavel ?? ""
+    );
+
+    const [areaVegetacao, setAreaVegetacao] = useState(
+        propriedade?.areaVegetacao ?? ""
+    );
 
     const [loading, setLoading] = useState(false);
+
     const [loadingProdutores, setLoadingProdutores] = useState(true);
+
     const [error, setError] = useState("");
 
     useEffect(() => {
+
         async function loadProdutores() {
+
             try {
-                setLoading(true);
 
-                if (propriedade) {
-                    await atualizarPropriedade(propriedade.id, {
-                        nome: nome.trim(),
-                        cidade: cidade.trim(),
-                        estado: estado.trim().toUpperCase(),
-                        areaTotal: Number(areaTotal),
-                        areaAgricultavel: Number(areaAgricultavel),
-                        areaVegetacao: Number(areaVegetacao),
-                    });
-                } else {
-                    await criarPropriedade({
-                        produtorId,
-                        nome: nome.trim(),
-                        cidade: cidade.trim(),
-                        estado: estado.trim().toUpperCase(),
-                        areaTotal: Number(areaTotal),
-                        areaAgricultavel: Number(areaAgricultavel),
-                        areaVegetacao: Number(areaVegetacao),
-                    });
-                }
+                const response = await listarProdutores();
 
-                onSuccess();
+                setProdutores(response);
+
             } catch (error) {
+
                 console.error(error);
 
                 setError(
-                    propriedade
-                        ? "Não foi possível atualizar a propriedade."
-                        : "Não foi possível cadastrar a propriedade."
+                    "Não foi possível carregar os produtores."
                 );
+
             } finally {
-                setLoading(false);
+
+                setLoadingProdutores(false);
+
             }
         }
 
         loadProdutores();
+
     }, []);
 
     async function handleSubmit(
         event: FormEvent<HTMLFormElement>
     ) {
+
         event.preventDefault();
 
         setError("");
@@ -89,37 +104,66 @@ export default function PropriedadeForm({
             !areaAgricultavel ||
             !areaVegetacao
         ) {
+
             setError("Preencha todos os campos.");
+
             return;
         }
 
         try {
+
             setLoading(true);
 
-            await criarPropriedade({
-                produtorId,
-                nome: nome.trim(),
-                cidade: cidade.trim(),
-                estado: estado.trim().toUpperCase(),
-                areaTotal: Number(areaTotal),
-                areaAgricultavel: Number(areaAgricultavel),
-                areaVegetacao: Number(areaVegetacao),
-            });
+            if (propriedade) {
+
+                await atualizarPropriedade(
+                    propriedade.id,
+                    {
+                        nome: nome.trim(),
+                        cidade: cidade.trim(),
+                        estado: estado.trim().toUpperCase(),
+                        areaTotal: Number(areaTotal),
+                        areaAgricultavel: Number(areaAgricultavel),
+                        areaVegetacao: Number(areaVegetacao),
+                    }
+                );
+
+            } else {
+
+                await criarPropriedade({
+                    produtorId,
+                    nome: nome.trim(),
+                    cidade: cidade.trim(),
+                    estado: estado.trim().toUpperCase(),
+                    areaTotal: Number(areaTotal),
+                    areaAgricultavel: Number(areaAgricultavel),
+                    areaVegetacao: Number(areaVegetacao),
+                });
+
+            }
 
             onSuccess();
+
         } catch (error) {
+
             console.error(error);
 
             setError(
-                "Não foi possível cadastrar a propriedade."
+                propriedade
+                    ? "Não foi possível atualizar a propriedade."
+                    : "Não foi possível cadastrar a propriedade."
             );
+
         } finally {
+
             setLoading(false);
+
         }
     }
 
     return (
         <div className="form-panel">
+
             <h2>
                 {propriedade
                     ? "Editar propriedade"
@@ -127,7 +171,9 @@ export default function PropriedadeForm({
             </h2>
 
             <form onSubmit={handleSubmit}>
+
                 <div className="form-group">
+
                     <label htmlFor="produtor">
                         Produtor
                     </label>
@@ -136,10 +182,16 @@ export default function PropriedadeForm({
                         id="produtor"
                         value={produtorId}
                         onChange={(event) =>
-                            setProdutorId(event.target.value)
+                            setProdutorId(
+                                event.target.value
+                            )
                         }
-                        disabled={loadingProdutores || !!propriedade}
+                        disabled={
+                            loadingProdutores ||
+                            !!propriedade
+                        }
                     >
+
                         <option value="">
                             {loadingProdutores
                                 ? "Carregando produtores..."
@@ -147,17 +199,22 @@ export default function PropriedadeForm({
                         </option>
 
                         {produtores.map((produtor) => (
+
                             <option
                                 key={produtor.id}
                                 value={produtor.id}
                             >
                                 {produtor.nome}
                             </option>
+
                         ))}
+
                     </select>
+
                 </div>
 
                 <div className="form-group">
+
                     <label htmlFor="nome">
                         Nome da propriedade
                     </label>
@@ -171,9 +228,11 @@ export default function PropriedadeForm({
                         }
                         placeholder="Ex.: Fazenda São João"
                     />
+
                 </div>
 
                 <div className="form-group">
+
                     <label htmlFor="cidade">
                         Cidade
                     </label>
@@ -187,9 +246,11 @@ export default function PropriedadeForm({
                         }
                         placeholder="Digite a cidade"
                     />
+
                 </div>
 
                 <div className="form-group">
+
                     <label htmlFor="estado">
                         Estado
                     </label>
@@ -204,9 +265,11 @@ export default function PropriedadeForm({
                         }
                         placeholder="PR"
                     />
+
                 </div>
 
                 <div className="form-group">
+
                     <label htmlFor="areaTotal">
                         Área total (ha)
                     </label>
@@ -221,9 +284,11 @@ export default function PropriedadeForm({
                             setAreaTotal(event.target.value)
                         }
                     />
+
                 </div>
 
                 <div className="form-group">
+
                     <label htmlFor="areaAgricultavel">
                         Área agricultável (ha)
                     </label>
@@ -240,9 +305,11 @@ export default function PropriedadeForm({
                             )
                         }
                     />
+
                 </div>
 
                 <div className="form-group">
+
                     <label htmlFor="areaVegetacao">
                         Área de vegetação (ha)
                     </label>
@@ -259,6 +326,7 @@ export default function PropriedadeForm({
                             )
                         }
                     />
+
                 </div>
 
                 {error && (
@@ -268,6 +336,7 @@ export default function PropriedadeForm({
                 )}
 
                 <div className="form-actions">
+
                     <button
                         type="button"
                         onClick={onCancel}
@@ -278,7 +347,10 @@ export default function PropriedadeForm({
 
                     <button
                         type="submit"
-                        disabled={loading || loadingProdutores}
+                        disabled={
+                            loading ||
+                            loadingProdutores
+                        }
                     >
                         {loading
                             ? "Salvando..."
@@ -286,8 +358,11 @@ export default function PropriedadeForm({
                                 ? "Salvar alterações"
                                 : "Cadastrar"}
                     </button>
+
                 </div>
+
             </form>
+
         </div>
     );
 }

@@ -20,7 +20,15 @@ export class CulturaRepository {
     }
 
     async listar() {
-        return await this.prisma.cultura.findMany()
+        return await this.prisma.cultura.findMany({
+            include:{
+                safra:{
+                    include:{
+                        propriedade: true
+                    }
+                }
+            }
+        })
     }
 
     async buscarPorId(id: string) {

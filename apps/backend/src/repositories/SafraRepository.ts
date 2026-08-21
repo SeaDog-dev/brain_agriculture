@@ -20,7 +20,9 @@ export class SafraRepository {
     }
 
     async listar() {
-        return await this.prisma.safra.findMany()
+        return await this.prisma.safra.findMany({
+            include:{propriedade: true}
+        })
     }
 
     async buscarPorId(id: string) {
