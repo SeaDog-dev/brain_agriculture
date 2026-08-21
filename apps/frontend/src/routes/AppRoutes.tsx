@@ -4,15 +4,18 @@ import Dashboard from "../pages/Dashboard";
 import Produtores from "../pages/Produtores";
 import Propriedades from "../pages/Propriedades";
 import Culturas from "../pages/Culturas";
+import Layout from "../components/layout/Layout";
 
-export function AppRoutes(){
-    return(
+export function AppRoutes() {
+    return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/produtores" element={<Produtores />} />
-                <Route path="/propriedades" element={<Propriedades />} />
-                <Route path="/culturas" element={<Culturas />} />
+                <Route element={<Layout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/produtores" element={<Produtores />} />
+                    <Route path="/propriedades" element={<Propriedades />} />
+                    <Route path="/culturas" element={<Culturas />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     )
