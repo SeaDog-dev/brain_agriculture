@@ -2,12 +2,14 @@ import type { Produtor } from "../../types/produtor";
 
 interface ProdutorTableProps {
     produtores: Produtor[];
-    onEdit:(produtor: Produtor) => void;
+    onEdit: (produtor: Produtor) => void;
+    onDelete: (produtor: Produtor) => void;
 }
 
 export default function ProdutorTable({
     produtores,
-    onEdit
+    onEdit,
+    onDelete,
 }: ProdutorTableProps) {
     return (
         <div className="table-container">
@@ -26,12 +28,21 @@ export default function ProdutorTable({
                             <td>{produtor.nome}</td>
                             <td>{produtor.documento}</td>
                             <td>
-                                <button 
-                                    type="button"
-                                    onClick={() => onEdit(produtor)}
-                                >
-                                    Editar
-                                </button>
+                                <div className="table-actions">
+                                    <button
+                                        type="button"
+                                        onClick={() => onEdit(produtor)}
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => onDelete(produtor)}
+                                    >
+                                        Excluir
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}

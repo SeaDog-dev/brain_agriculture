@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import ProdutorTable from "../components/Produtores/ProdutorTable";
 import ProdutorForm from "../components/Produtores/ProdutorForm";
-import { listarProdutores } from "../services/produtorService";
+import { listarProdutores, excluirProdutor } from "../services/produtorService";
 import type { Produtor } from "../types/produtor";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 export default function Produtores() {
     const [produtores, setProdutores] = useState<Produtor[]>([]);
@@ -11,6 +12,8 @@ export default function Produtores() {
     const [error, setError] = useState(false);
     const [produtorEditando, setProdutorEditando] = useState<Produtor | null>(null);
     const [showForm, setShowForm] = useState(false);
+    const [produtorExcluindo, setProdutorExcluindo] = useState<Produtor | null>(null);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         async function loadProdutores() {
@@ -103,6 +106,39 @@ export default function Produtores() {
                     onEdit={(produtor) => {
                         setProdutorEditando(produtor);
                         setShowForm(false)
+                    }}
+                    onDelete={(produto) => {
+                        setProdutorExcluindo(produto)
+                    }}
+                />
+            )}
+
+            {produtorExcluindo && (
+                <ConfirmDialog
+                    title="Excluir produtor"
+                    message={`Tem certeza que deseja excluir ${produtorExcluindo.nome}?`}
+                    loading={deleting}
+                    onCancel={() => {
+                        setProdutorExcluindo(null);
+                    }}
+                    onConfirm={async () => {
+                        try {
+                            setDeleting(true);
+
+                            await excluirProdutor(
+                                produtorExcluindo.id
+                            );
+
+                            const response = await listarProdutores();
+
+                            setProdutores(response);
+
+                            setProdutorExcluindo(null);
+                        } catch (error) {
+                            console.error(error);
+                        } finally {
+                            setDeleting(false);
+                        }
                     }}
                 />
             )}

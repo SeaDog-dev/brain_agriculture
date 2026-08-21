@@ -276,3 +276,46 @@ td button {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.dialog {
+    width: 400px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.dialog h2 {
+    margin-bottom: 12px;
+}
+
+.dialog p {
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.dialog-actions button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

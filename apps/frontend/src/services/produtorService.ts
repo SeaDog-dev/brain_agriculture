@@ -40,3 +40,7 @@ export async function atualizarProdutor(
 
     return response.data;
 }
+
+export async function excluirProdutor(id: string): Promise<void> {
+    await api.delete(`/produtores/${id}`);
+}
