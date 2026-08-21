@@ -20,7 +20,6 @@ export class ProdutorController {
     }
 
     async buscarPorId(req: Request, res: Response) {
-        console.log(req.params.id)
         if (!req.params.id) {
             return res.status(400).json({ message: "missing parameters" })
         }
