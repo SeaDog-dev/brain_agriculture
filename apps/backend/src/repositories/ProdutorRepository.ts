@@ -30,7 +30,7 @@ export class ProdutorRepository {
 
     async atualizar(id:string, documento: string, nome: string){
         return this.prisma.produtor.update({
-            where: {documento},
+            where: {id},
             data: {documento,nome}
         })
     }

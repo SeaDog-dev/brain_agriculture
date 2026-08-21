@@ -18,11 +18,15 @@ produtorRoutes.get('/produtores', (req, res) => {
     produtorController.listar(req, res)
 });
 
-produtorRoutes.put('/produtores', (req, res) => {
+produtorRoutes.get('/produtores/:id', (req, res) => {
+    produtorController.buscarPorId(req, res)
+});
+
+produtorRoutes.put('/produtores/:id', (req, res) => {
     produtorController.atualizar(req, res)
 });
 
-produtorRoutes.delete('/produtores', (req, res) => {
+produtorRoutes.delete('/produtores/:id', (req, res) => {
     produtorController.excluir(req, res)
 });
 

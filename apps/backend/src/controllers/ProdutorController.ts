@@ -15,31 +15,36 @@ export class ProdutorController {
     }
 
     async listar(req: Request, res: Response) {
-        if (!req.headers['id']) {
-            const response = await this.produtorService.listar()
-            return res.status(200).json(response)
+        const response = await this.produtorService.listar()
+        return res.status(200).json(response)
+    }
+
+    async buscarPorId(req: Request, res: Response) {
+        console.log(req.params.id)
+        if (!req.params.id) {
+            return res.status(400).json({ message: "missing parameters" })
         }
-        const id = req.headers['id'].toString()
+        const id = req.params.id.toString()
         const produtores = await this.produtorService.buscarPorId(id)
         return res.status(200).json(produtores)
     }
 
     async atualizar(req: Request, res: Response) {
         const { documento, nome } = req.body
-        if (!req.headers['id']) {
+        if (!req.params.id) {
             return res.status(400).json({ message: "missing parameters" })
         }
-        const id = req.headers['id'].toString()
+        const id = req.params.id.toString()
 
         const produtor = await this.produtorService.atualizar(id, documento, nome)
-        res.status(201).json(produtor)
+        res.status(200).json(produtor)
     }
 
     async excluir(req: Request, res: Response) {
-        if (!req.headers['id']) {
+        if (!req.params.id) {
             return res.status(400).json({ message: "missing parameters" })
         }
-        const id = req.headers['id'].toString()
+        const id = req.params.id.toString()
         await this.produtorService.excluir(id)
         return res.status(200).json({})
     }
