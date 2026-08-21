@@ -319,3 +319,16 @@ td button {
     border-radius: 8px;
     cursor: pointer;
 }
+
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    outline: none;
+}
+
+.form-group select:focus {
+    border-color: #6b7280;
+}

@@ -29,7 +29,11 @@ export class PropriedadeRepository {
     }
 
     async listar() {
-        return await this.prisma.propriedade.findMany()
+        return await this.prisma.propriedade.findMany({
+            include:{
+                produtor: true
+            }
+        })
     }
 
     async buscarPorId(id: string) {
